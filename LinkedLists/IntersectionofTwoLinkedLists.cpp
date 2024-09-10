@@ -57,47 +57,44 @@ class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         
+       
+        ListNode *startA = headA, *startB = headB;
+        int l1 = 0 , l2 = 0 ;
         
-        int l1 = 0 , l2 = 0  ;
-        ListNode *p = headA ;
-        ListNode* q = headB ;
-        while ( p != NULL )p=p->next,++l1 ;
-        while ( q != NULL )q=q->next,++l2 ;
-        
-        
-        
-        int skippedItems = max(l1,l2) - min(l1,l2) ;
-        
-        pair<ListNode* , ListNode*> startNodes = (l2>=l1)?getStartingNodes( headA,headB,skippedItems): getStartingNodes( headB,headA,skippedItems) ;
-        
-        ListNode *r = startNodes.first , *s = startNodes.second , *res = NULL ;
-        
-        while( r!= NULL ) {
-            
-            if( r == s ){
-                res=r ;
+        while(headA != NULL ){
+           ++l1;
+            headA=headA->next;
+        }
+        while(headB != NULL ){
+            ++l2;
+            headB=headB->next;
+        }
+
+        int skippedSteps = ( l2 > l1 ) ? l2 - l1 : l1 - l2 ;
+
+
+        if( l1 > l2 ){
+            while(skippedSteps-- )startA=startA->next ;
+        }
+        else if( l2> l1 ){
+            while(skippedSteps-- )startB=startB->next ;
+        }
+
+        ListNode *commonNode = NULL ;
+        while( startA != NULL && startB != NULL ){
+
+            if( startA == startB){
+                commonNode = startA ;
                 break ;
             }
-            
-            r=r->next ;
-            s=s->next ;
-        }
-            
-        return res ; 
-            
+
+            startA = startA->next ;
+            startB = startB->next ;
         }
         
         
-        
-        
-    pair<ListNode* , ListNode*> getStartingNodes( ListNode* smallHead , ListNode *longHead , int skippedItems){
-        
-        
-        while( skippedItems-- )longHead=longHead->next  ;
-            
-        return make_pair(smallHead,longHead) ;
-        
+       
+        return commonNode;
         
     }
-    
 };
