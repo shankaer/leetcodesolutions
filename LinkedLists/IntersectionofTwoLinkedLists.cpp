@@ -6,6 +6,53 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+/*  STACK BASED APPROACH 
+
+
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        
+        stack< ListNode*> s1 ;
+        stack< ListNode*> s2 ;
+        ListNode *startA = headA, *startB = headB;
+        
+        while(headA != NULL ){
+            s1.push(headA);
+            headA=headA->next;
+        }
+        while(headB != NULL ){
+            s2.push(headB);
+            headB=headB->next;
+        }
+        
+        
+        bool isCommonNode = true ;
+        
+        ListNode *commonNode = NULL ;
+        
+        while(isCommonNode && !s1.empty() && !s2.empty()){
+            
+            ListNode *topA =   s1.top();
+            ListNode *topB = s2.top() ;
+            
+            if( topA != topB ) {
+                isCommonNode = false ;
+               
+            }
+            else {
+                 commonNode = topA;
+            }
+            s1.pop(); s2.pop();
+        }
+       
+        return commonNode;
+        
+    }
+};
+
+*/ 
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
